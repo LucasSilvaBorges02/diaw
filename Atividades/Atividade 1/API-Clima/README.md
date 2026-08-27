@@ -34,6 +34,7 @@ As configurações ficam em `src/main/resources/application.properties`:
 
 ```properties
 clima.api.url=https://api.open-meteo.com/v1/forecast
+clima.geocoding.url=https://geocoding-api.open-meteo.com/v1/search
 clima.cidade=Belo Horizonte - MG
 clima.latitude=-19.9167
 clima.longitude=-43.9345
@@ -65,6 +66,7 @@ A aplicação sobe em `http://localhost:8080`.
 ### GET /climaBH
 
 Retorna as condições meteorológicas atuais de Belo Horizonte - MG.
+As coordenadas são lidas do `application.properties`.
 
 **Exemplo de resposta (200 OK):**
 
@@ -101,7 +103,38 @@ Retorna as condições meteorológicas atuais de Belo Horizonte - MG.
 | `descricao` | Condição do tempo (traduzida do código WMO) | - |
 | `dataHoraConsulta` | Momento da consulta | - |
 
+### GET /clima/{cidade}
+
+Retorna as condições meteorológicas de qualquer cidade informada na URL.
+O nome é resolvido em coordenadas pela API de geocoding da Open-Meteo, e
+essas coordenadas são então usadas na consulta de previsão.
+
+Nomes compostos podem usar hífen no lugar do espaço.
+
+**Exemplos:**
+
+```text
+GET /clima/curitiba
+GET /clima/belo-horizonte
+GET /clima/sao-paulo
+```
+
+A resposta tem o mesmo formato do `/climaBH`. O campo `cidade` traz o nome
+como reconhecido pelo geocoding, acompanhado do estado quando disponível
+(ex: `"Curitiba - Paraná"`). Quando a busca retorna mais de um resultado,
+é utilizado o primeiro, de maior relevância segundo a Open-Meteo.
+
 ## Tratamento de erros
+
+**404 Not Found** — cidade informada não encontrada pelo geocoding:
+
+```json
+{
+  "erro": "Cidade nao encontrada: xyzabc",
+  "status": 404,
+  "dataHora": "27/08/2026 18:45:12"
+}
+```
 
 **503 Service Unavailable** — falha de comunicação com a API externa ou
 dados indisponíveis:
@@ -125,13 +158,22 @@ O tratamento é centralizado na classe `TratadorDeErros`, anotada com
 src/main/java/com/example/API_Clima/
 ├── ApiClimaApplication.java
 ├── controller/
-│   └── Controller.java          # expõe o endpoint REST
+│   └── Controller.java              # expõe os endpoints REST
 ├── service/
-│   └── Service.java             # consome a API externa e processa os dados
+│   └── Service.java                 # consome as APIs externas e processa os dados
 ├── dto/
-│   ├── OpenMeteoResponse.java   # espelha o JSON da Open-Meteo
-│   └── ClimaDTO.java            # objeto próprio de resposta da aplicação
+│   ├── OpenMeteoResponse.java       # espelha o JSON da previsão
+│   ├── GeocodingResponse.java       # espelha o JSON do geocoding
+│   └── ClimaDTO.java                # objeto próprio de resposta da aplicação
 └── exception/
     ├── ClimaException.java
+    ├── CidadeNaoEncontradaException.java
     └── TratadorDeErros.java
 ```
+
+## Desafio extra
+
+Dos itens sugeridos como desafio adicional, foram implementados:
+
+- Consulta do clima de outras cidades (`GET /clima/{cidade}`)
+- Retorno das informações organizadas em um objeto próprio da aplicação (`ClimaDTO`)
