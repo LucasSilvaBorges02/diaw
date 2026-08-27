@@ -4,6 +4,7 @@ import com.example.API_Clima.dto.ClimaDTO;
 import com.example.API_Clima.service.Service;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,5 +19,10 @@ public class Controller {
     @GetMapping("/climaBH")
     public ClimaDTO climaBeloHorizonte() {
         return service.buscarClima();
+    }
+
+    @GetMapping("/clima/{cidade}")
+    public ClimaDTO climaPorCidade(@PathVariable String cidade) {
+        return service.buscarClimaPorCidade(cidade);
     }
 }

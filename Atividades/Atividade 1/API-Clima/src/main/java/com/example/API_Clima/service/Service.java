@@ -1,7 +1,9 @@
 package com.example.API_Clima.service;
 
 import com.example.API_Clima.dto.ClimaDTO;
+import com.example.API_Clima.dto.GeocodingResponse;
 import com.example.API_Clima.dto.OpenMeteoResponse;
+import com.example.API_Clima.exception.CidadeNaoEncontradaException;
 import com.example.API_Clima.exception.ClimaException;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -13,30 +15,73 @@ import java.time.format.DateTimeFormatter;
 @org.springframework.stereotype.Service
 public class Service {
 
-    private final RestClient restClient;
-    private final String cidade;
+    private final RestClient climaClient;
+    private final RestClient geoClient;
+    private final String cidadePadrao;
     private final double latitude;
     private final double longitude;
 
     public Service(RestClient.Builder builder,
-                   @Value("${clima.api.url}") String url,
-                   @Value("${clima.cidade}") String cidade,
+                   @Value("${clima.api.url}") String urlClima,
+                   @Value("${clima.geocoding.url}") String urlGeocoding,
+                   @Value("${clima.cidade}") String cidadePadrao,
                    @Value("${clima.latitude}") double latitude,
                    @Value("${clima.longitude}") double longitude) {
-        this.restClient = builder.baseUrl(url).build();
-        this.cidade = cidade;
+        this.climaClient = builder.clone().baseUrl(urlClima).build();
+        this.geoClient = builder.clone().baseUrl(urlGeocoding).build();
+        this.cidadePadrao = cidadePadrao;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     public ClimaDTO buscarClima() {
+        return consultarPrevisao(cidadePadrao, latitude, longitude);
+    }
+
+    public ClimaDTO buscarClimaPorCidade(String nomeCidade) {
+        String nome = nomeCidade.replace("-", " ").trim();
+
+        if (nome.isEmpty()) {
+            throw new CidadeNaoEncontradaException("Informe o nome de uma cidade.");
+        }
+
+        GeocodingResponse geo;
+
+        try {
+            geo = geoClient.get()
+                    .uri(uri -> uri
+                            .queryParam("name", nome)
+                            .queryParam("count", 1)
+                            .queryParam("language", "pt")
+                            .queryParam("format", "json")
+                            .build())
+                    .retrieve()
+                    .body(GeocodingResponse.class);
+        } catch (Exception e) {
+            throw new ClimaException("Falha na comunicacao com o servico de geocoding.", e);
+        }
+
+        if (geo == null || geo.results() == null || geo.results().isEmpty()) {
+            throw new CidadeNaoEncontradaException("Cidade nao encontrada: " + nome);
+        }
+
+        GeocodingResponse.Resultado local = geo.results().get(0);
+
+        String rotulo = local.admin1() != null
+                ? local.name() + " - " + local.admin1()
+                : local.name();
+
+        return consultarPrevisao(rotulo, local.latitude(), local.longitude());
+    }
+
+    private ClimaDTO consultarPrevisao(String cidade, double lat, double lon) {
         OpenMeteoResponse resposta;
 
         try {
-            resposta = restClient.get()
+            resposta = climaClient.get()
                     .uri(uri -> uri
-                            .queryParam("latitude", latitude)
-                            .queryParam("longitude", longitude)
+                            .queryParam("latitude", lat)
+                            .queryParam("longitude", lon)
                             .queryParam("current",
                                     "temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m")
                             .queryParam("daily", "temperature_2m_max,temperature_2m_min")

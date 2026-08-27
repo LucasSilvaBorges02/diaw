@@ -13,6 +13,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class TratadorDeErros {
 
+    @ExceptionHandler(CidadeNaoEncontradaException.class)
+    public ResponseEntity<Map<String, Object>> tratarCidadeNaoEncontrada(CidadeNaoEncontradaException e) {
+        return montarResposta(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
     @ExceptionHandler(ClimaException.class)
     public ResponseEntity<Map<String, Object>> tratarClimaException(ClimaException e) {
         return montarResposta(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage());
