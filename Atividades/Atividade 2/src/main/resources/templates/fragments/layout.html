@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" th:fragment="base(titulo, corpo)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1B1140">
+    <title th:text="${titulo} + ' · Horizonte'">Horizonte</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" th:href="@{/css/horizonte.css}">
+</head>
+<body>
+
+<!-- céu em gradiente animado -->
+<div class="ceu" aria-hidden="true"></div>
+
+<!-- silhueta da serra -->
+<svg class="serra" viewBox="0 0 1440 210" preserveAspectRatio="none" aria-hidden="true"
+     xmlns="http://www.w3.org/2000/svg">
+    <path class="serra__fundo"
+          d="M0,210 L0,118 L96,86 L214,124 L330,64 L452,110 L560,52 L688,102 L812,70 L944,116 L1064,74 L1188,120 L1300,84 L1440,112 L1440,210 Z"/>
+    <path class="serra__frente"
+          d="M0,210 L0,158 L110,132 L236,166 L352,120 L470,154 L588,108 L714,152 L838,118 L968,160 L1090,126 L1216,164 L1338,134 L1440,158 L1440,210 Z"/>
+</svg>
+
+<main class="palco">
+    <div th:replace="${corpo}">conteúdo da página</div>
+</main>
+
+</body>
+</html>

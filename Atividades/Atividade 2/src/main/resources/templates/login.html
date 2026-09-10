@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: base('Entrar', ~{::conteudo})}">
+<body>
+
+<section class="cartao" th:fragment="conteudo">
+
+    <div th:replace="~{fragments/marca :: logo}"></div>
+
+    <h1 class="titulo">Bom te ver<br>de novo.</h1>
+    <p class="legenda">Entre com seu usuário ou email para continuar.</p>
+
+    <div class="aviso aviso--erro" th:if="${param.erro != null}" role="alert">
+        <span aria-hidden="true">✕</span>
+        <span>Usuário ou senha incorretos. Confira os dados e tente de novo.</span>
+    </div>
+
+    <div class="aviso aviso--ok" th:if="${param.saiu != null}" role="status">
+        <span aria-hidden="true">✓</span>
+        <span>Sessão encerrada. Até a próxima.</span>
+    </div>
+
+    <div class="aviso aviso--ok" th:if="${sucesso}" role="status">
+        <span aria-hidden="true">✓</span>
+        <span th:text="${sucesso}">Mensagem</span>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="campo">
+            <label for="username">Usuário ou email</label>
+            <input type="text" id="username" name="username"
+                   placeholder="seu.usuario" autocomplete="username" required autofocus>
+        </div>
+
+        <div class="campo">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password"
+                   placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="botao">Entrar</button>
+    </form>
+
+    <nav class="rodape-links">
+        <a th:href="@{/register}">Criar uma conta</a>
+        <a th:href="@{/recoverpassword}">Esqueci minha senha</a>
+    </nav>
+
+</section>
+
+</body>
+</html>

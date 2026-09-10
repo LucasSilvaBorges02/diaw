@@ -1,0 +1,418 @@
+/* =========================================================================
+   Horizonte — identidade visual da aplicação
+   Céu em gradiente animado + serra no rodapé + formulário flutuante em vidro
+   ========================================================================= */
+
+:root {
+    --noite:    #1B1140;
+    --violeta:  #6C2BA0;
+    --magenta:  #D64B7B;
+    --ambar:    #F6A93B;
+    --menta:    #7FE3D0;
+
+    --serra-frente: #150D2E;
+    --serra-fundo:  #2A1A50;
+
+    --papel:        #FFF6EC;
+    --papel-suave:  rgba(255, 246, 236, 0.68);
+    --papel-tenue:  rgba(255, 246, 236, 0.22);
+    --tinta:        #21133F;
+
+    --raio-cartao: 24px;
+    --raio-botao: 999px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--papel);
+    background-color: var(--noite);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------------------------------------------- céu -- */
+
+.ceu {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background: linear-gradient(125deg,
+            var(--noite) 0%,
+            var(--violeta) 32%,
+            var(--magenta) 62%,
+            var(--ambar) 100%);
+    background-size: 280% 280%;
+    animation: deriva 26s ease-in-out infinite;
+}
+
+/* brilho baixo, como o sol se pondo atrás da serra */
+.ceu::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 42% at 50% 92%,
+            rgba(246, 169, 59, 0.55) 0%,
+            rgba(214, 75, 123, 0.22) 45%,
+            transparent 72%);
+}
+
+@keyframes deriva {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+/* ----------------------------------------------------------------- serra -- */
+
+.serra {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 210px;
+    z-index: -2;
+    display: block;
+}
+
+.serra__fundo  { fill: var(--serra-fundo); opacity: 0.55; }
+.serra__frente { fill: var(--serra-frente); }
+
+/* ----------------------------------------------------------------- palco -- */
+
+.palco {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 56px 20px 200px;
+}
+
+.cartao {
+    width: min(100%, 430px);
+    padding: 40px 38px 34px;
+    border-radius: var(--raio-cartao);
+    background: rgba(33, 19, 63, 0.38);
+    border: 1px solid var(--papel-tenue);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow: 0 34px 70px -24px rgba(12, 6, 30, 0.72);
+    animation: subir 0.7s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.cartao--largo {
+    width: min(100%, 520px);
+}
+
+@keyframes subir {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ----------------------------------------------------------------- marca -- */
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    color: var(--papel);
+}
+
+.marca svg {
+    width: 26px;
+    height: 26px;
+    flex: none;
+}
+
+/* --------------------------------------------------------------- títulos -- */
+
+.titulo {
+    margin: 0;
+    font-family: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+    font-size: clamp(30px, 6vw, 38px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+}
+
+.legenda {
+    margin: 10px 0 30px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--papel-suave);
+    max-width: 34ch;
+}
+
+/* ------------------------------------------------------------- formulário -- */
+
+.campo {
+    margin-bottom: 22px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    color: var(--papel-suave);
+}
+
+.campo input {
+    width: 100%;
+    padding: 10px 2px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--papel);
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--papel-tenue);
+    border-radius: 0;
+    transition: border-color 0.2s ease;
+}
+
+.campo input::placeholder {
+    color: rgba(255, 246, 236, 0.32);
+}
+
+.campo input:hover {
+    border-bottom-color: rgba(255, 246, 236, 0.42);
+}
+
+.campo input:focus {
+    outline: none;
+    border-bottom-color: var(--ambar);
+}
+
+.campo input:focus-visible {
+    outline: 2px solid var(--menta);
+    outline-offset: 4px;
+}
+
+.campo input.invalido {
+    border-bottom-color: #FF9BBA;
+}
+
+/* preenchimento automático do navegador não devolve fundo branco */
+.campo input:-webkit-autofill,
+.campo input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--papel);
+    -webkit-box-shadow: 0 0 0 1000px rgba(33, 19, 63, 0.9) inset;
+    transition: background-color 9999s ease-out;
+}
+
+.erro-campo {
+    display: block;
+    margin-top: 7px;
+    font-size: 13px;
+    color: #FFC2D4;
+}
+
+.dica {
+    margin: -12px 0 22px;
+    font-size: 12.5px;
+    color: rgba(255, 246, 236, 0.5);
+}
+
+/* ----------------------------------------------------------------- botão -- */
+
+.botao {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px 20px;
+    font: inherit;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--tinta);
+    background: var(--ambar);
+    border: none;
+    border-radius: var(--raio-botao);
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.12s ease;
+}
+
+.botao:hover {
+    filter: brightness(1.07);
+}
+
+.botao:active {
+    transform: translateY(1px);
+}
+
+.botao:focus-visible {
+    outline: 2px solid var(--menta);
+    outline-offset: 3px;
+}
+
+.botao--vazado {
+    color: var(--papel);
+    background: transparent;
+    border: 1px solid var(--papel-tenue);
+}
+
+.botao--vazado:hover {
+    background: rgba(255, 246, 236, 0.08);
+    filter: none;
+}
+
+/* ----------------------------------------------------------------- links -- */
+
+.rodape-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 246, 236, 0.12);
+    font-size: 14px;
+}
+
+.rodape-links--centro {
+    justify-content: center;
+}
+
+a {
+    color: var(--menta);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+a:hover {
+    border-bottom-color: currentColor;
+}
+
+a:focus-visible {
+    outline: 2px solid var(--menta);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* --------------------------------------------------------------- avisos -- */
+
+.aviso {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding: 13px 15px;
+    border-radius: 14px;
+    border: 1px solid;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.aviso--erro {
+    background: rgba(214, 75, 123, 0.18);
+    border-color: rgba(255, 155, 186, 0.45);
+    color: #FFDCE7;
+}
+
+.aviso--ok {
+    background: rgba(127, 227, 208, 0.14);
+    border-color: rgba(127, 227, 208, 0.42);
+    color: #D8FFF6;
+}
+
+.aviso b {
+    font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ home -- */
+
+.painel {
+    width: min(100%, 620px);
+}
+
+.painel__saudacao {
+    margin: 0 0 6px;
+    font-family: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+    font-size: clamp(28px, 5.5vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.dados {
+    margin: 26px 0 0;
+    display: grid;
+    gap: 1px;
+    background: rgba(255, 246, 236, 0.12);
+    border: 1px solid rgba(255, 246, 236, 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.dados div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+    background: rgba(33, 19, 63, 0.5);
+    font-size: 14.5px;
+}
+
+.dados dt {
+    margin: 0;
+    color: var(--papel-suave);
+}
+
+.dados dd {
+    margin: 0;
+    text-align: right;
+    word-break: break-word;
+}
+
+.acoes {
+    display: flex;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.acoes form {
+    flex: 1;
+}
+
+/* --------------------------------------------------------- responsividade -- */
+
+@media (max-width: 480px) {
+    .palco {
+        padding: 32px 16px 150px;
+    }
+
+    .cartao {
+        padding: 32px 24px 28px;
+        border-radius: 20px;
+    }
+
+    .serra {
+        height: 140px;
+    }
+
+    .rodape-links {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

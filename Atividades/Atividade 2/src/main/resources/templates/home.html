@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: base('Início', ~{::conteudo})}">
+<body>
+
+<section class="cartao painel" th:fragment="conteudo">
+
+    <div th:replace="~{fragments/marca :: logo}"></div>
+
+    <h1 class="painel__saudacao" th:text="'Olá, ' + ${primeiroNome} + '.'">Olá.</h1>
+    <p class="legenda">Você está autenticado. Esta área só é acessível com sessão ativa.</p>
+
+    <dl class="dados" th:if="${usuario != null}">
+        <div>
+            <dt>Nome</dt>
+            <dd th:text="${usuario.nome}">—</dd>
+        </div>
+        <div>
+            <dt>Usuário</dt>
+            <dd th:text="${usuario.username}">—</dd>
+        </div>
+        <div>
+            <dt>Email</dt>
+            <dd th:text="${usuario.email}">—</dd>
+        </div>
+        <div>
+            <dt>Conta criada em</dt>
+            <dd th:text="${#temporals.format(usuario.criadoEm, 'dd/MM/yyyy HH:mm')}">—</dd>
+        </div>
+    </dl>
+
+    <div class="acoes">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="botao">Sair da conta</button>
+        </form>
+    </div>
+
+</section>
+
+</body>
+</html>
