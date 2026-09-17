@@ -144,4 +144,4 @@ src/main/resources/
 
 ## Autores
 
-Lucas e Arthur Monserrat — Engenharia de Software, PUC Minas.
+Lucas Silva e Arthur Monserrat — Engenharia de Software, PUC Minas.
