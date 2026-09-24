@@ -1,0 +1,29 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; color: #333; background: #f7f8fa; }
+.cabecalho { padding: 18px 0; background: #1e3b63; color: white; }
+.cabecalho h1 { margin: 0; font-size: 25px; }
+.container { width: 90%; max-width: 1400px; margin: auto; }
+.filtros { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 24px 0 18px; padding: 18px; background: white; border: 1px solid #ddd; border-radius: 8px; }
+.campo { display: flex; flex: 1 1 200px; flex-direction: column; gap: 6px; }
+input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; }
+.acoes { display: flex; gap: 8px; }
+button, .limpar { padding: 10px 16px; border-radius: 5px; font-size: 15px; text-decoration: none; cursor: pointer; }
+button { border: 1px solid #1e3b63; background: #1e3b63; color: white; }
+.limpar { border: 1px solid #ccc; background: white; color: #333; }
+.resultado { margin: 18px 0; }
+.vazio { padding: 20px; background: white; border-radius: 8px; }
+.grade-candidatos { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; margin-bottom: 30px; }
+.card { overflow: hidden; background: white; border: 1px solid #ddd; border-radius: 8px; }
+.foto-wrapper { background: #eee; }
+.foto-candidato { display: block; width: 100%; aspect-ratio: 161 / 225; object-fit: cover; }
+.foto-candidato[hidden], .sem-foto[hidden] { display: none; }
+.sem-foto { display: flex; align-items: center; justify-content: center; aspect-ratio: 161 / 225; }
+.card-conteudo { padding: 12px; overflow-wrap: anywhere; font-size: 13px; }
+.card h2 { margin: 0 0 8px; color: #1e3b63; font-size: 16px; }
+.card p { margin: 4px 0; }
+.nome-civil { font-style: italic; }
+@media (max-width: 600px) {
+  .container { width: 94%; }
+  .acoes { width: 100%; }
+  .grade-candidatos { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); }
+}
