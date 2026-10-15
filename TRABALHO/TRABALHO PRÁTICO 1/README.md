@@ -81,7 +81,7 @@
 
 - 🧭 **Menu de navegação** com rotas para Sobre Mim, Projetos e Experiências (com menu hambúrguer no celular).
 - 🌐 **Bilíngue (PT/EN):** troca de idioma em tempo real, lembrando a escolha do visitante. A API também devolve os textos nos dois idiomas.
-- 🙋 **Sobre Mim:** formação, área de atuação, interesses, objetivos e tecnologias.
+- 🙋 **Sobre Mim:** formação, área de atuação, interesses e objetivos.
 - 🗓️ **Projetos em timeline:** vindos da API, ordenados do mais antigo ao mais recente, cada um com nome, descrição, tecnologias, link do GitHub e imagem/GIF.
 - 💼 **Experiências:** vindas da API, com empresa/instituição, cargo ou atividade, período, tipo e descrição.
 - ⏳ **Estados de carregamento e erro:** mensagens de "carregando", "nada por aqui" e botão "Tentar novamente" caso a API esteja fora do ar.
@@ -292,7 +292,7 @@ Outros comandos do front-end:
 | :--- | :--- |
 | Projetos da timeline | `backend/src/main/resources/dados/projetos.json` |
 | Experiências | `backend/src/main/resources/dados/experiencias.json` |
-| Nome, foto, tecnologias | `portfolio/src/data/perfil.js` |
+| Nome e foto | `portfolio/src/data/perfil.js` |
 | Textos de Sobre Mim e da interface (PT e EN) | `portfolio/src/i18n/textos.js` |
 | Imagens/GIFs dos projetos | `portfolio/public/projetos/` (e referenciar no campo `imagem` do JSON) |
 
@@ -410,7 +410,7 @@ TRABALHO PRÁTICO 1/
         ├── pages/                    # 📄 Sobre, Projetos, Experiencias, NaoEncontrada
         ├── hooks/                    # 🎣 useApi (carregando / erro / dados)
         ├── services/                 # 🔌 api.js (chamadas à API Spring Boot)
-        ├── data/                     # 🗂️ perfil.js (nome, foto, tecnologias)
+        ├── data/                     # 🗂️ perfil.js (nome e foto)
         ├── i18n/                     # 🌎 IdiomaContext.jsx e textos.js (PT/EN)
         └── styles/                   # 🎨 global.css (tokens, layout e responsividade)
 ```

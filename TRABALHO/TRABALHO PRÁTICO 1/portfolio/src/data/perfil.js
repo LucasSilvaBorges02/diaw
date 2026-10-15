@@ -10,16 +10,3 @@ export const perfil = {
   github: 'https://github.com/LucasSilvaBorges02',
   curriculo: null, // ex.: '/curriculo.pdf'
 }
-
-export const habilidades = [
-  'Java',
-  'Spring Boot',
-  'Spring Security',
-  'Thymeleaf',
-  'JPA / H2',
-  'HTML',
-  'CSS',
-  'JavaScript',
-  'React',
-  'Git & GitHub',
-]

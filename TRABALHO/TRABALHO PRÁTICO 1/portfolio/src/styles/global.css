@@ -506,21 +506,6 @@ ol {
   gap: 16px;
 }
 
-.habilidades {
-  margin-top: 64px;
-}
-
-.habilidades h2 {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-}
-
-.habilidades .tag {
-  font-size: 0.85rem;
-  padding: 6px 14px;
-  color: var(--texto);
-}
-
 /* ---------- Carregando / erro / vazio (dados da API) ---------- */
 .estado-api {
   display: grid;

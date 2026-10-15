@@ -27,7 +27,6 @@ export const textos = {
       tituloObjetivos: 'Objetivos',
       objetivos:
         'Quero aprender cada vez mais, ganhar experiência com projetos e me preparar para oportunidades na área de tecnologia.',
-      tituloHabilidades: 'Tecnologias que uso',
     },
     projetos: {
       titulo: 'Projetos',
@@ -91,7 +90,6 @@ export const textos = {
       tituloObjetivos: 'Goals',
       objetivos:
         'I want to keep learning, gain experience through projects and prepare myself for opportunities in technology.',
-      tituloHabilidades: 'Tech I use',
     },
     projetos: {
       titulo: 'Projects',

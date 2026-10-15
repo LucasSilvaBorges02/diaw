@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FiArrowRight } from 'react-icons/fi'
 import { useIdioma } from '../i18n/IdiomaContext'
-import { perfil, habilidades } from '../data/perfil'
+import { perfil } from '../data/perfil'
 
 export default function Sobre() {
   const { t } = useIdioma()
@@ -46,17 +46,6 @@ export default function Sobre() {
             <p>{b.texto}</p>
           </article>
         ))}
-      </section>
-
-      <section className="habilidades">
-        <h2>{s.tituloHabilidades}</h2>
-        <ul className="tags">
-          {habilidades.map((h) => (
-            <li key={h} className="tag">
-              {h}
-            </li>
-          ))}
-        </ul>
       </section>
     </div>
   )
