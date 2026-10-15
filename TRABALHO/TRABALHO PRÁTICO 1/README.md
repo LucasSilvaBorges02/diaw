@@ -60,7 +60,7 @@
 ---
 
 ## 🔗 Links Úteis
-* 🌐 **Front-end (Vercel):** _em breve (Sprint 03)_
+* 🌐 **Site (Vercel):** [portfolio-lucas-borges.vercel.app](https://portfolio-lucas-borges.vercel.app)
 * ⚙️ **API (Render):** [portfolio-api-lucas.onrender.com/api/status](https://portfolio-api-lucas.onrender.com/api/status)
   > A instância gratuita "dorme" sem acesso; a primeira requisição pode levar até 1 minuto.
 * 📂 **Código-fonte:** [`/portfolio`](./portfolio) (front-end) · [`/backend`](./backend) (API)
