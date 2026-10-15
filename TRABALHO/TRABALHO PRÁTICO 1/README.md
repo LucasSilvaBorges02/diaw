@@ -345,10 +345,11 @@ curl http://localhost:8080/api/experiencias
 
 ### 1. Back-end no Render
 
-1. Em [dashboard.render.com](https://dashboard.render.com/), clique em **New → Web Service** e conecte o repositório `LucasSilvaBorges02/diaw`.
-2. **Root Directory:** `TRABALHO/TRABALHO PRÁTICO 1/backend`
-3. **Language/Runtime:** `Docker` (o Render usa o `backend/Dockerfile`).
-4. **Instance Type:** `Free`.
+1. Em [dashboard.render.com](https://dashboard.render.com/), clique em **New → Web Service** e informe o repositório `https://github.com/LucasSilvaBorges02/diaw`.
+2. **Language:** `Docker`. **Root Directory:** deixe vazio.
+3. Em **Advanced → Dockerfile Path**, use `./portfolio-api.Dockerfile` (arquivo na raiz do repositório).
+   > O Render não aceita espaço nem acento no Root Directory, então `TRABALHO PRÁTICO 1` não pode ser usado direto. O `portfolio-api.Dockerfile` copia a pasta `backend/` e faz o build. O `backend/Dockerfile` continua servindo para rodar com Docker localmente (`docker build backend`).
+4. **Health Check Path:** `/api/status`. **Instance Type:** `Free`.
 5. Em **Environment**, adicione `CORS_ORIGENS` com a URL da Vercel (ex.: `https://meu-portfolio.vercel.app`).
 6. Clique em **Deploy** e teste `https://<sua-api>.onrender.com/api/status`.
 
