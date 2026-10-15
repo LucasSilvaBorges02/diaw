@@ -61,7 +61,8 @@
 
 ## 🔗 Links Úteis
 * 🌐 **Front-end (Vercel):** _em breve (Sprint 03)_
-* ⚙️ **API (Render):** _em breve (Sprint 03)_
+* ⚙️ **API (Render):** [portfolio-api-lucas.onrender.com/api/status](https://portfolio-api-lucas.onrender.com/api/status)
+  > A instância gratuita "dorme" sem acesso; a primeira requisição pode levar até 1 minuto.
 * 📂 **Código-fonte:** [`/portfolio`](./portfolio) (front-end) · [`/backend`](./backend) (API)
 * 🎨 **Wireframes:** [`/docs/wireframes`](./docs/wireframes)
 
