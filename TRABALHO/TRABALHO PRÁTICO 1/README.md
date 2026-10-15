@@ -354,13 +354,15 @@ curl http://localhost:8080/api/experiencias
 5. Em **Environment**, adicione `CORS_ORIGENS` com a URL da Vercel (ex.: `https://meu-portfolio.vercel.app`).
 6. Clique em **Deploy** e teste `https://<sua-api>.onrender.com/api/status`.
 
+> Como o repositório foi informado como **público** (sem conectar a conta do GitHub), o Render não faz deploy automático a cada push: depois de mudar a API, use **Manual Deploy → Deploy latest commit** no painel do serviço.
+
 ### 2. Front-end na Vercel
 
 1. Em [vercel.com/new](https://vercel.com/new), importe o repositório `LucasSilvaBorges02/diaw`.
 2. **Root Directory:** `TRABALHO/TRABALHO PRÁTICO 1/portfolio`
 3. A Vercel detecta o Vite sozinha (build `npm run build`, saída `dist`).
 4. Em **Environment Variables**, adicione `VITE_API_URL` com a URL do Render (ex.: `https://<sua-api>.onrender.com`).
-5. Clique em **Deploy**. A cada `git push` na `main`, front e back são atualizados automaticamente.
+5. Clique em **Deploy**. A cada `git push` na `main`, a Vercel atualiza o front-end automaticamente.
 
 O arquivo `portfolio/vercel.json` redireciona todas as rotas para o `index.html`, para que links como `/projetos` funcionem ao recarregar a página.
 
