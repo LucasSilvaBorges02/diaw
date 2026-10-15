@@ -521,6 +521,27 @@ ol {
   color: var(--texto);
 }
 
+/* ---------- Carregando / erro / vazio (dados da API) ---------- */
+.estado-api {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding: 28px;
+  background: var(--fundo-elevado);
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio);
+  color: var(--texto-suave);
+}
+
+.estado-api--erro {
+  border-color: rgb(255 107 107 / 0.5);
+}
+
+.timeline:empty,
+.experiencias:empty {
+  display: none;
+}
+
 /* ==========================================================
    Projetos (timeline)
    ========================================================== */

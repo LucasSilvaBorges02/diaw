@@ -1,9 +1,12 @@
 import { useIdioma } from '../i18n/IdiomaContext'
-import { experiencias } from '../data/experiencias'
+import { buscarExperiencias } from '../services/api'
+import { useApi } from '../hooks/useApi'
 import TituloPagina from '../components/TituloPagina'
+import EstadoApi from '../components/EstadoApi'
 
 export default function Experiencias() {
   const { t, idioma } = useIdioma()
+  const { dados: experiencias, erro, carregando, recarregar } = useApi(buscarExperiencias)
 
   return (
     <div className="container">
@@ -13,8 +16,15 @@ export default function Experiencias() {
         subtitulo={t.experiencias.subtitulo}
       />
 
+      <EstadoApi
+        carregando={carregando}
+        erro={erro}
+        vazio={experiencias?.length === 0}
+        onTentarNovamente={recarregar}
+      />
+
       <ul className="experiencias">
-        {experiencias.map((e) => (
+        {experiencias?.map((e) => (
           <li key={e.id} className="experiencia">
             <div className="experiencia__meta">
               <span className="experiencia__periodo">{e.periodo[idioma]}</span>

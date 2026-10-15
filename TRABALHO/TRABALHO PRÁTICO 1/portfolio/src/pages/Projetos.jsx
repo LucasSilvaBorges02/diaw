@@ -1,7 +1,9 @@
 import { FiGithub } from 'react-icons/fi'
 import { useIdioma } from '../i18n/IdiomaContext'
-import { projetos } from '../data/projetos'
+import { buscarProjetos } from '../services/api'
+import { useApi } from '../hooks/useApi'
 import TituloPagina from '../components/TituloPagina'
+import EstadoApi from '../components/EstadoApi'
 
 function formatarData(data, idioma) {
   const [ano, mes] = data.split('-').map(Number)
@@ -13,14 +15,22 @@ function formatarData(data, idioma) {
 
 export default function Projetos() {
   const { t, idioma } = useIdioma()
-  const ordenados = [...projetos].sort((a, b) => a.data.localeCompare(b.data))
+  // a API já devolve os projetos do mais antigo ao mais recente
+  const { dados: projetos, erro, carregando, recarregar } = useApi(buscarProjetos)
 
   return (
     <div className="container">
       <TituloPagina indice="02" titulo={t.projetos.titulo} subtitulo={t.projetos.subtitulo} />
 
+      <EstadoApi
+        carregando={carregando}
+        erro={erro}
+        vazio={projetos?.length === 0}
+        onTentarNovamente={recarregar}
+      />
+
       <ol className="timeline">
-        {ordenados.map((p) => (
+        {projetos?.map((p) => (
           <li key={p.id} className="timeline__item">
             <time className="timeline__data" dateTime={p.data}>
               {formatarData(p.data, idioma)}
