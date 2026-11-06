@@ -2,6 +2,7 @@ package br.pucminas.aluguel.config;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +20,13 @@ public class JwtConfig {
 
     private final SecretKey chave;
 
-    public JwtConfig(@Value("${app.jwt.segredo}") String segredo) {
+    /** Sem JWT_SECRET gera um segredo aleatório: funciona, mas quem estava logado precisa entrar de novo quando a API reinicia. */
+    public JwtConfig(@Value("${app.jwt.segredo:}") String segredo) {
         byte[] bytes = segredo.getBytes(StandardCharsets.UTF_8);
-        if (bytes.length < 32) {
+        if (segredo.isBlank()) {
+            bytes = new byte[32];
+            new SecureRandom().nextBytes(bytes);
+        } else if (bytes.length < 32) {
             throw new IllegalStateException("JWT_SECRET precisa ter pelo menos 32 caracteres");
         }
         this.chave = new SecretKeySpec(bytes, "HmacSHA256");
