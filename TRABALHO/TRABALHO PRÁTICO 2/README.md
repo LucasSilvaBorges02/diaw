@@ -27,8 +27,8 @@ Laboratório 02 de **Desenvolvimento de Interfaces e Aplicações Web (DIAW)**, 
 ---
 
 ## 🔗 Links Úteis
-* 🌐 **Demo Online:** _(link da Vercel depois do deploy)_
-* ⚙️ **API:** _(link do Render depois do deploy)_, com status em `/api/status`
+* 🌐 **Demo Online:** [aluguel-carros-lucas.vercel.app](https://aluguel-carros-lucas.vercel.app)
+* ⚙️ **API:** [aluguel-api-lucas.onrender.com/api/status](https://aluguel-api-lucas.onrender.com/api/status) (plano grátis: a primeira requisição pode levar até 1 minuto enquanto o servidor acorda)
 * 📖 **Modelos UML:** [docs/diagramas.md](docs/diagramas.md) e [docs/historias-de-usuario.md](docs/historias-de-usuario.md)
 
 **Contas de teste** (criadas automaticamente quando o banco está vazio, senha `123456`): `cliente`, `empresa` (Locadora Rota Livre) e `banco` (Banco Horizonte).
@@ -70,7 +70,7 @@ O sistema tem dois subsistemas: a **gestão de pedidos e contratos** (API Spring
 * **Autenticação:** Spring Security com JWT (HS256) e senhas com BCrypt
 
 ### ⚙️ Infraestrutura
-* **Front-end:** Vercel · **API:** Render (Docker) · **Banco:** Supabase
+* **Front-end:** Vercel · **API:** Render (Docker) · **Banco em produção:** PostgreSQL do Render (compatível com Supabase, veja [Deploy](#-deploy))
 
 ---
 
@@ -171,9 +171,13 @@ As tabelas são criadas pelo Hibernate (`ddl-auto=update`) na primeira vez que a
 
 ## 🚀 Deploy
 
-1. **Supabase:** crie um projeto e pegue a connection string em **Connect → Session pooler**.
-2. **Render (API):** New → Web Service → este repositório, Language **Docker**, Dockerfile Path `./aluguel-api.Dockerfile`, plano Free, health check `/api/status` e as variáveis `DB_URL`, `DB_USER`, `DB_PASSWORD`, `JWT_SECRET`.
-3. **Vercel (front):** importe o repositório com Root Directory `TRABALHO/TRABALHO PRÁTICO 2/frontend`, preset Vite e a variável `VITE_API_URL` com a URL do Render.
+O deploy da API e do banco é feito pelo **Blueprint** [`render.yaml`](../../render.yaml) na raiz do repositório: ele cria o PostgreSQL grátis do Render (`aluguel-db`) e a API (`aluguel-api-lucas`, Docker), e liga os dados de conexão do banco nas variáveis da API sozinho (perfil `render`).
+
+1. **Render:** New → Blueprint → este repositório → Deploy Blueprint.
+2. **Vercel:** importe o repositório com Root Directory `TRABALHO/TRABALHO PRÁTICO 2/frontend`, preset Vite e `VITE_API_URL=https://aluguel-api-lucas.onrender.com`.
+
+> [!NOTE]
+> O enunciado pede Supabase, mas o plano grátis da conta já estava no limite de projetos ativos. Como o Supabase também é PostgreSQL, a API funciona igual nos dois: para usar o Supabase basta rodar sem o perfil `render` e definir `DB_URL`, `DB_USER` e `DB_PASSWORD` com a conexão **Session pooler** do projeto.
 
 ---
 
