@@ -1,0 +1,40 @@
+# Blueprint do TP2 (aluguel de carros): Postgres + API, tudo no plano grátis
+databases:
+  - name: aluguel-db
+    plan: free
+    databaseName: aluguel
+    user: aluguel
+
+services:
+  - type: web
+    name: aluguel-api-lucas
+    runtime: docker
+    plan: free
+    dockerfilePath: ./aluguel-api.Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/status
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: DB_HOST
+        fromDatabase:
+          name: aluguel-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: aluguel-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: aluguel-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: aluguel-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: aluguel-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
