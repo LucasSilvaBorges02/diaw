@@ -1,0 +1,87 @@
+:root {
+  --fundo: #0e0f12;
+  --cartao: #17191e;
+  --borda: #2a2d35;
+  --texto: #ececf1;
+  --suave: #9a9caa;
+  --destaque: #e63946;
+  --ok: #2ec27e;
+  --aviso: #f5a524;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1 { margin: 0 0 1rem; }
+a { color: var(--destaque); }
+code { background: #ffffff14; padding: 0 .3rem; border-radius: 4px; }
+
+.marca { font-weight: 800; letter-spacing: .08em; }
+.marca b { color: var(--destaque); }
+.marca.grande { font-size: 2.4rem; }
+
+.btn { background: var(--destaque); color: #fff; border: 0; border-radius: 8px; padding: .6rem 1rem; font-weight: 600; cursor: pointer; }
+.btn:disabled { opacity: .6; }
+.btn.fantasma { background: transparent; border: 1px solid var(--borda); color: var(--texto); }
+.btn.perigo { background: transparent; border: 1px solid var(--destaque); color: var(--destaque); }
+
+input, select { width: 100%; background: #0b0c0f; border: 1px solid var(--borda); color: var(--texto); border-radius: 8px; padding: .6rem .7rem; font: inherit; }
+label { display: grid; gap: .3rem; font-size: .9rem; color: var(--suave); }
+fieldset { border: 1px solid var(--borda); border-radius: 10px; display: grid; gap: .6rem; }
+legend { color: var(--suave); padding: 0 .4rem; }
+
+.form { display: grid; gap: 1rem; margin-bottom: 1rem; }
+.grade { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.inteiro { grid-column: 1 / -1; }
+.linha { display: grid; grid-template-columns: 2fr 1fr auto; gap: .5rem; }
+.linha-form { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+.erro { color: #ff8a8a; margin: 0; }
+.aviso { color: var(--ok); }
+.sub { color: var(--suave); }
+.dica { margin-top: 1.5rem; font-size: .85rem; color: var(--suave); border: 1px dashed var(--borda); border-radius: 8px; padding: .8rem; }
+
+.tela-foto { display: grid; grid-template-columns: 1.1fr 1fr; min-height: 100vh; }
+.foto { background: linear-gradient(to top, #000d 10%, #0000 60%), url('/carro-esportivo.jpg') center / cover; display: flex; align-items: flex-end; padding: 3rem; }
+.foto p { color: #ddd; max-width: 26rem; }
+.painel { padding: 3rem clamp(1.5rem, 5vw, 5rem); overflow-y: auto; max-height: 100vh; }
+
+.topo { display: flex; align-items: center; gap: 2rem; padding: 1rem 2rem; border-bottom: 1px solid var(--borda); }
+.topo nav { display: flex; gap: 1.2rem; flex: 1; }
+.topo nav a { color: var(--suave); text-decoration: none; }
+.topo nav a.active { color: var(--texto); border-bottom: 2px solid var(--destaque); }
+.quem { display: flex; align-items: center; gap: 1rem; color: var(--suave); font-size: .9rem; }
+.conteudo { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+.titulo { display: flex; justify-content: space-between; align-items: center; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; }
+.acoes { display: flex; gap: .5rem; flex-wrap: wrap; }
+.pedidos { display: grid; gap: .2rem; }
+.pedido h3 { margin: 0; }
+.pedido p { margin: .4rem 0; }
+.cabeca { display: flex; justify-content: space-between; align-items: center; }
+.status { font-size: .8rem; padding: .2rem .7rem; border-radius: 99px; background: #ffffff14; }
+.status.aprovado, .status.contratado { color: var(--ok); }
+.status.pendente { color: var(--aviso); }
+.status.reprovado, .status.cancelado { color: #ff8a8a; }
+.avaliar { display: flex; gap: .5rem; margin-top: .8rem; padding-top: .8rem; border-top: 1px solid var(--borda); flex-wrap: wrap; }
+.avaliar input, .avaliar select { flex: 1; min-width: 180px; width: auto; }
+
+.carros { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; }
+.carro h3 { margin: .3rem 0; font-weight: 400; }
+.carro p { color: var(--suave); font-size: .85rem; }
+.carro strong { display: block; font-size: 1.3rem; margin-bottom: .6rem; }
+.carro small, td small { color: var(--suave); font-weight: 400; display: block; font-size: .8rem; }
+.carro strong small { display: inline; }
+.ano { color: var(--destaque); font-size: .8rem; font-weight: 700; }
+
+.tabela { width: 100%; border-collapse: collapse; }
+.tabela th, .tabela td { text-align: left; padding: .7rem; border-bottom: 1px solid var(--borda); }
+.tabela th { color: var(--suave); font-weight: 500; }
+
+@media (max-width: 800px) {
+  .tela-foto { grid-template-columns: 1fr; }
+  .foto { min-height: 220px; }
+  .grade, .linha { grid-template-columns: 1fr; }
+  .topo { flex-wrap: wrap; gap: 1rem; }
+}
